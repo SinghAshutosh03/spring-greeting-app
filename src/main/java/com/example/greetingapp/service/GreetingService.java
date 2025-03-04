@@ -104,13 +104,37 @@
 //}
 
 // to update  a greeting
+//package com.example.greetingapp.service;
+//
+//import com.example.greetingapp.model.Greeting;
+//import com.example.greetingapp.repository.GreetingRepository;
+//import org.springframework.stereotype.Service;
+//
+//import java.util.Optional;
+//
+//@Service
+//public class GreetingService {
+//    private final GreetingRepository greetingRepository;
+//
+//    public GreetingService(GreetingRepository greetingRepository) {
+//        this.greetingRepository = greetingRepository;
+//    }
+//
+//    public Optional<Greeting> updateGreeting(Long id, String newMessage) {
+//        Optional<Greeting> existingGreeting = greetingRepository.findById(id);
+//        if (existingGreeting.isPresent()) {
+//            Greeting greeting = existingGreeting.get();
+//            greeting.setMessage(newMessage);
+//            return Optional.of(greetingRepository.save(greeting));
+//        }
+//        return Optional.empty();
+//    }
+//}
+// to delete a greeting
 package com.example.greetingapp.service;
 
-import com.example.greetingapp.model.Greeting;
 import com.example.greetingapp.repository.GreetingRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class GreetingService {
@@ -120,13 +144,11 @@ public class GreetingService {
         this.greetingRepository = greetingRepository;
     }
 
-    public Optional<Greeting> updateGreeting(Long id, String newMessage) {
-        Optional<Greeting> existingGreeting = greetingRepository.findById(id);
-        if (existingGreeting.isPresent()) {
-            Greeting greeting = existingGreeting.get();
-            greeting.setMessage(newMessage);
-            return Optional.of(greetingRepository.save(greeting));
+    public boolean deleteGreeting(Long id) {
+        if (greetingRepository.existsById(id)) {
+            greetingRepository.deleteById(id);
+            return true;
         }
-        return Optional.empty();
+        return false;
     }
 }

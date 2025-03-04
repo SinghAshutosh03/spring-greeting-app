@@ -127,13 +127,35 @@
 //}
 
 // to handle put request for updating a greeting
+//package com.example.greetingapp.controller;
+//
+//import com.example.greetingapp.model.Greeting;
+//import com.example.greetingapp.service.GreetingService;
+//import org.springframework.web.bind.annotation.*;
+//
+//import java.util.Optional;
+//
+//@RestController
+//@RequestMapping("/greeting")
+//public class GreetingController {
+//    private final GreetingService greetingService;
+//
+//    public GreetingController(GreetingService greetingService) {
+//        this.greetingService = greetingService;
+//    }
+//
+//    @PutMapping("/update/{id}")
+//    public Optional<Greeting> updateGreeting(@PathVariable Long id, @RequestParam String newMessage) {
+//        return greetingService.updateGreeting(id, newMessage);
+//    }
+//}
+
+// to Handle DELETE Request for Deleting a Greeting
+
 package com.example.greetingapp.controller;
 
-import com.example.greetingapp.model.Greeting;
 import com.example.greetingapp.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/greeting")
@@ -144,8 +166,13 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    @PutMapping("/update/{id}")
-    public Optional<Greeting> updateGreeting(@PathVariable Long id, @RequestParam String newMessage) {
-        return greetingService.updateGreeting(id, newMessage);
+    @DeleteMapping("/delete/{id}")
+    public String deleteGreeting(@PathVariable Long id) {
+        boolean isDeleted = greetingService.deleteGreeting(id);
+        if (isDeleted) {
+            return "Greeting with ID " + id + " deleted successfully.";
+        } else {
+            return "Greeting with ID " + id + " not found.";
+        }
     }
 }
