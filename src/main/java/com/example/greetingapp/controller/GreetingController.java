@@ -103,13 +103,37 @@
 //}
 
 // to gt req for all
+//package com.example.greetingapp.controller;
+//
+//import com.example.greetingapp.model.Greeting;
+//import com.example.greetingapp.service.GreetingService;
+//import org.springframework.web.bind.annotation.*;
+//
+//import java.util.List;
+//
+//@RestController
+//@RequestMapping("/greeting")
+//public class GreetingController {
+//    private final GreetingService greetingService;
+//
+//    public GreetingController(GreetingService greetingService) {
+//        this.greetingService = greetingService;
+//    }
+//
+//    @GetMapping("/all")
+//    public List<Greeting> getAllGreetings() {
+//        return greetingService.getAllGreetings();
+//    }
+//}
+
+// to handle put request for updating a greeting
 package com.example.greetingapp.controller;
 
 import com.example.greetingapp.model.Greeting;
 import com.example.greetingapp.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/greeting")
@@ -120,8 +144,8 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    @GetMapping("/all")
-    public List<Greeting> getAllGreetings() {
-        return greetingService.getAllGreetings();
+    @PutMapping("/update/{id}")
+    public Optional<Greeting> updateGreeting(@PathVariable Long id, @RequestParam String newMessage) {
+        return greetingService.updateGreeting(id, newMessage);
     }
 }

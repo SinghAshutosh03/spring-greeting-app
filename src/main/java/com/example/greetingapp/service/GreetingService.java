@@ -82,13 +82,35 @@
 
 
 //fetch all
+//package com.example.greetingapp.service;
+//
+//import com.example.greetingapp.model.Greeting;
+//import com.example.greetingapp.repository.GreetingRepository;
+//import org.springframework.stereotype.Service;
+//
+//import java.util.List;
+//
+//@Service
+//public class GreetingService {
+//    private final GreetingRepository greetingRepository;
+//
+//    public GreetingService(GreetingRepository greetingRepository) {
+//        this.greetingRepository = greetingRepository;
+//    }
+//
+//    public List<Greeting> getAllGreetings() {
+//        return greetingRepository.findAll();
+//    }
+//}
+
+// to update  a greeting
 package com.example.greetingapp.service;
 
 import com.example.greetingapp.model.Greeting;
 import com.example.greetingapp.repository.GreetingRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GreetingService {
@@ -98,7 +120,13 @@ public class GreetingService {
         this.greetingRepository = greetingRepository;
     }
 
-    public List<Greeting> getAllGreetings() {
-        return greetingRepository.findAll();
+    public Optional<Greeting> updateGreeting(Long id, String newMessage) {
+        Optional<Greeting> existingGreeting = greetingRepository.findById(id);
+        if (existingGreeting.isPresent()) {
+            Greeting greeting = existingGreeting.get();
+            greeting.setMessage(newMessage);
+            return Optional.of(greetingRepository.save(greeting));
+        }
+        return Optional.empty();
     }
 }
